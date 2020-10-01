@@ -1,1 +1,1 @@
-python ../src/test.py
+python ../src/integration_tests.py

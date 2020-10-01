@@ -1,18 +1,17 @@
 from json import dumps, loads
-import urllib3
+from urllib3 import PoolManager
 from datetime import date
-import os
+from os import environ
 
 
-def lambda_handler(event, context):
+def lambda_handler(event, _):
     bot_update = BotMessage(event['body'])
     message = bot_update.message
-    chat_id = message['chat']['id']
     curr_code = message['text'].replace('/', '')
 
-    url = os.environ['url'].format(curr_code, date.today().strftime("%Y%m%d"))
+    url = environ['url'].format(curr_code, date.today().strftime("%Y%m%d"))
 
-    http = urllib3.PoolManager()
+    http = PoolManager()
     result = http.request('GET', url)
     curr_rate = CurrencyRate(result.data)
 
@@ -21,7 +20,7 @@ def lambda_handler(event, context):
         'body': dumps(
             {
                 'method': 'sendMessage',
-                'chat_id': chat_id,
+                'chat_id': message['chat']['id'],
                 'text': f'Курс для {curr_code} на {curr_rate.exchangedate}: {curr_rate.rate}'
             })
     }
