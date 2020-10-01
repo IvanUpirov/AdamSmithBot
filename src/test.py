@@ -8,6 +8,7 @@ class BasicTests(unittest.TestCase):
             body: 'test'
         }
         
+        
         result = lambda_handler(event, None)
         
         self.assertEqual(1, 1)
