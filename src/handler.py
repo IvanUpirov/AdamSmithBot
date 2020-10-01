@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from json import dumps, loads
 from urllib3 import PoolManager
 from datetime import date
@@ -21,7 +23,7 @@ def lambda_handler(event, _):
             {
                 'method': 'sendMessage',
                 'chat_id': message['chat']['id'],
-                'text': f'Курс для {curr_code} на {curr_rate.exchangedate}: {curr_rate.rate}'
+                'text': u'Курс для {curr_code} на {curr_rate.exchangedate}: {curr_rate.rate}'
             })
     }
 

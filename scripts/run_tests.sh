@@ -1,1 +1,0 @@
-python ../src/integration_tests.py
