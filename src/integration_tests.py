@@ -1,6 +1,7 @@
 import unittest
 from handler import lambda_handler
 from os import environ
+from re import search
 
 
 class BasicTests(unittest.TestCase):
@@ -17,8 +18,10 @@ class BasicTests(unittest.TestCase):
         }
 
         result = lambda_handler(event, None)
-
         self.assertEqual(result['statusCode'], 200)
+
+        s = search('\d{2}\.\d{2}\.\d{4}: \d+\.\d+', result['body'])
+        self.assertIsNotNone(s)
 
 
 if __name__ == '__main__':
