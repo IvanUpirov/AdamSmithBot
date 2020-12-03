@@ -15,6 +15,7 @@ def lambda_handler(event, _):
 
     http = PoolManager()
     result = http.request('GET', url)
+    print(result.data)
     curr_rate = CurrencyRate(result.data)
 
     return {
