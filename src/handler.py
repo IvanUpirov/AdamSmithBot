@@ -15,8 +15,13 @@ def lambda_handler(event, _):
 
     http = PoolManager()
     result = http.request('GET', url)
-    print(result.data)
     curr_rate = CurrencyRate(result.data)
+
+    if not hasattr(curr_rate, 'exchangedate') or not hasattr(curr_rate, 'rate') :
+        return {
+            'statusCode': 500,
+            'body': 'Internal Server Error'
+        }
 
     return {
         'statusCode': 200,
@@ -36,4 +41,6 @@ class BotMessage:
 
 class CurrencyRate:
     def __init__(self, j):
-        self.__dict__ = loads(j)[0]
+        deserialized = loads(j)
+        if len(deserialized) == 1:
+            self.__dict__ = deserialized[0]

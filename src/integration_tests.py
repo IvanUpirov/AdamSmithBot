@@ -23,6 +23,15 @@ class BasicTests(unittest.TestCase):
         s = search('\d{2}\.\d{2}\.\d{4}: \d+\.\d+', result['body'])
         self.assertIsNotNone(s)
 
+    def test_wrong_input(self):
+        event = {
+            'body': '{"message":{"chat":{"id":168407544},"text":"wrong"}}',
+        }
+
+        result = lambda_handler(event, None)
+        self.assertEqual(result['statusCode'], 500)
+        self.assertEqual(result['body'], 'Internal Server Error')
+
 
 if __name__ == '__main__':
     unittest.main()
