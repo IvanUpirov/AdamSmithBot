@@ -19,7 +19,7 @@ def lambda_handler(event, _):
 
     if not hasattr(curr_rate, 'exchangedate') or not hasattr(curr_rate, 'rate') :
         return {
-            'statusCode': 500,
+            'statusCode': 200,
             'body': 'Internal Server Error'
         }
 

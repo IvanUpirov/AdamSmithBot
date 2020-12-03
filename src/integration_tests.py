@@ -29,7 +29,7 @@ class BasicTests(unittest.TestCase):
         }
 
         result = lambda_handler(event, None)
-        self.assertEqual(result['statusCode'], 500)
+        self.assertEqual(result['statusCode'], 200)
         self.assertEqual(result['body'], 'Internal Server Error')
 
 
