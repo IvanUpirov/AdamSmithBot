@@ -14,4 +14,5 @@ jobs:
     - name: .NET Lambda build and deploy
       run: |
         dotnet tool install -g Amazon.Lambda.Tools
-        dotnet lambda deploy-function
+        cd src 
+        dotnet lambda deploy-function --region
