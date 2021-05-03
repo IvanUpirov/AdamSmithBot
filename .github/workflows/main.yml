@@ -13,6 +13,8 @@ jobs:
 
     - name: .NET Lambda build and deploy
       run: |
-        dotnet tool install -g Amazon.Lambda.Tools
+        dotnet tool install --global Amazon.Lambda.Tools --version 5.1.1
+        export AWS_ACCESS_KEY_ID = {{ AWS_ACCESS_KEY_ID }}
+        export AWS_SECRET_ACCESS_KEY = {{ AWS_SECRET_ACCESS_KEY }}
         cd src 
         dotnet lambda deploy-function
