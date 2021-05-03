@@ -11,18 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - name: Use .NET 3.1
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 2.1.x
-
     - name: .NET Lambda build and deploy
-      uses: evalytica/dotnet-lambda-actions/deploy@v0.1.0
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: ${{ secrets.AWS_REGION }}
-        DOTNET_LAMBDA_PACKAGE_NAME: latest.zip
-        DOTNET_LAMBDA_FUNCTION_HANDLER: AdamSmith::AdamSmith.Function::FunctionHandler
-        DOTNET_LAMBDA_FUNCTION_NAME: AdamSmith2
-        DOTNET_LAMBDA_WORKING_DIR: ./src
+      run: |
+        dotnet tool install -g Amazon.Lambda.Tools
+        dotnet lambda deploy-function
