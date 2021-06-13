@@ -1,9 +1,9 @@
 ﻿using AdamSmith.Poco.Bank;
-using AdamSmith.Poco.TelegramRequest;
 using AdamSmith.Poco.TelegramResponse;
 using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
 using System.Net.Http;
@@ -18,11 +18,11 @@ namespace AdamSmith
     {
         public async Task<string> FunctionHandler(APIGatewayProxyRequest request)
         {
-            Update update = JsonConvert.DeserializeObject<Update>(request.Body);
+            JObject update = JObject.Parse(request.Body);
 
             var url = string.Format(
                 Environment.GetEnvironmentVariable("url"),
-                update.message.text.Replace("/", string.Empty),
+                update["message"]["text"].ToString().Replace("/", string.Empty),
                 DateTime.Now.ToString("yyyyMMdd"));
 
             using var client = new HttpClient();
@@ -32,7 +32,7 @@ namespace AdamSmith
 
             var responseBody = new ResponseBody
             {
-                chat_id = update.message.chat.id,
+                chat_id = int.Parse(update["message"]["chat"]["id"].ToString()),
                 method = "sendMessage",
                 text = $"Курс для usd на {DateTime.Now:dd.MM.yyyy}: {rate.rate}"
             };

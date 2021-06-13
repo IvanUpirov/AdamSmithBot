@@ -5,6 +5,11 @@ VisualStudioVersion = 16.0.31019.194
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdamSmith", "AdamSmith.csproj", "{809E86B4-920E-481E-ACCA-A02EC8C1533A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{631C257E-ECFC-4443-B8AC-BF7FDDC9B477}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\main.yml = ..\.github\workflows\main.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
