@@ -1,11 +1,7 @@
-﻿using AdamSmith.Poco.Bank;
-using AdamSmith.Poco.TelegramResponse;
-using Amazon.Lambda.APIGatewayEvents;
+﻿using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -28,16 +24,16 @@ namespace AdamSmith
             using var client = new HttpClient();
             HttpResponseMessage response = await client.GetAsync(url);
             var content = await response.Content.ReadAsStringAsync();
-            var rate = JsonConvert.DeserializeObject<CurrencyRate[]>(content).First();
+            JToken rate = JArray.Parse(content)[0];
 
-            var responseBody = new ResponseBody
+            var responseBody = new JObject
             {
-                chat_id = int.Parse(update["message"]["chat"]["id"].ToString()),
-                method = "sendMessage",
-                text = $"Курс для usd на {DateTime.Now:dd.MM.yyyy}: {rate.rate}"
+                { "chat_id", update["message"]["chat"]["id"] },
+                { "method", "sendMessage" },
+                { "text", $"Курс для usd на {DateTime.Now:dd.MM.yyyy}: {rate["rate"]}" }
             };
 
-            return JsonConvert.SerializeObject(responseBody);
+            return responseBody.ToString();
         }
     }
 }
