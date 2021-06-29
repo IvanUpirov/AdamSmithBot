@@ -1,9 +1,8 @@
-﻿using Amazon.Lambda.APIGatewayEvents;
+﻿using AdamSmith.DataProviders;
+using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
@@ -17,21 +16,8 @@ namespace AdamSmith
         {
             JObject update = JObject.Parse(request.Body);
 
-            string currencyName = update["message"]["text"].ToString().Replace("/", string.Empty);
-
-            var url = string.Format(
-                Environment.GetEnvironmentVariable("url"),
-                currencyName,
-                DateTime.Now.ToString("yyyyMMdd"));
-
-            using var client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(url);
-            var content = await response.Content.ReadAsStringAsync();
-            JToken rate = JArray.Parse(content).FirstOrDefault();
-
-            string responseText = rate != null 
-                ? $"Курс для {currencyName} на {DateTime.Now:dd.MM.yyyy}: {rate["rate"]}" 
-                : $"У мене немає курсу для цієї валюти";
+            string query = update["message"]["text"].ToString().Replace("/", string.Empty);
+            string responseText = await GetDataProvider(query).GetDataAsync(query);
 
             var responseBody = new JObject
             {
@@ -41,6 +27,11 @@ namespace AdamSmith
             };
 
             return responseBody.ToString();
+        }
+
+        private IDataProvider GetDataProvider(string query)
+        {
+            return new CurrencyDataProvider();
         }
     }
 }

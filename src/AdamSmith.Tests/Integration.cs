@@ -13,7 +13,7 @@ namespace AdamSmith.Tests
         [TestInitialize]
         public void Initialize() 
         {
-            Environment.SetEnvironmentVariable("url", "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode={0}&date={1}&json");
+            Environment.SetEnvironmentVariable("currency_url", "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode={0}&date={1}&json");
         }
 
         [TestMethod]
@@ -49,7 +49,7 @@ namespace AdamSmith.Tests
         [TestCleanup]
         public void Cleanup()
         {
-            Environment.SetEnvironmentVariable("url", null);
+            Environment.SetEnvironmentVariable("currency_url", null);
         }
     }
 }
