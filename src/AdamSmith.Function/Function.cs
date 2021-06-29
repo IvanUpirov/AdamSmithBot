@@ -2,6 +2,7 @@
 using Amazon.Lambda.Core;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -26,13 +27,17 @@ namespace AdamSmith
             using var client = new HttpClient();
             HttpResponseMessage response = await client.GetAsync(url);
             var content = await response.Content.ReadAsStringAsync();
-            JToken rate = JArray.Parse(content)[0];
+            JToken rate = JArray.Parse(content).FirstOrDefault();
+
+            string responseText = rate != null 
+                ? $"Курс для {currencyName} на {DateTime.Now:dd.MM.yyyy}: {rate["rate"]}" 
+                : $"У мене немає курсу для цієї валюти";
 
             var responseBody = new JObject
             {
                 { "chat_id", update["message"]["chat"]["id"] },
                 { "method", "sendMessage" },
-                { "text", $"Курс для {currencyName} на {DateTime.Now:dd.MM.yyyy}: {rate["rate"]}" }
+                { "text", responseText }
             };
 
             return responseBody.ToString();
