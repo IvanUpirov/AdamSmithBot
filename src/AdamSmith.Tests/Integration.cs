@@ -17,7 +17,7 @@ namespace AdamSmith.Tests
         }
 
         [TestMethod]
-        public async Task EndToEnd()
+        public async Task CurrencyEndToEnd()
         {
             var sut = new Function();
 
@@ -50,6 +50,39 @@ namespace AdamSmith.Tests
         public void Cleanup()
         {
             Environment.SetEnvironmentVariable("url", null);
+        }
+
+        [TestMethod]
+        public async Task Task()
+        {
+            var sut = new Function();
+
+            var chat = new JObject
+            {
+                { "id", 1 }
+            };
+
+            var message = new JObject
+            {
+                { "chat", chat },
+                { "text", "/UA4000214498" }
+            };
+
+            var update = new JObject
+            {
+                { "message", message }
+            };
+
+
+            var request = new APIGatewayProxyRequest
+            {
+                Body = JsonConvert.SerializeObject(update)
+            };
+
+            var result = await sut.FunctionHandler(request);
+
+            Assert.IsTrue(result.Contains("ASK"));
+            Assert.IsTrue(result.Contains("BID"));
         }
     }
 }
