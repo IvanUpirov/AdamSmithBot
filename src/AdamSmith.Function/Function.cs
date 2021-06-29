@@ -16,9 +16,11 @@ namespace AdamSmith
         {
             JObject update = JObject.Parse(request.Body);
 
+            string currencyName = update["message"]["text"].ToString().Replace("/", string.Empty);
+
             var url = string.Format(
                 Environment.GetEnvironmentVariable("url"),
-                update["message"]["text"].ToString().Replace("/", string.Empty),
+                currencyName,
                 DateTime.Now.ToString("yyyyMMdd"));
 
             using var client = new HttpClient();
@@ -30,7 +32,7 @@ namespace AdamSmith
             {
                 { "chat_id", update["message"]["chat"]["id"] },
                 { "method", "sendMessage" },
-                { "text", $"Курс для usd на {DateTime.Now:dd.MM.yyyy}: {rate["rate"]}" }
+                { "text", $"Курс для {currencyName} на {DateTime.Now:dd.MM.yyyy}: {rate["rate"]}" }
             };
 
             return responseBody.ToString();
