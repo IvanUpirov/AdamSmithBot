@@ -1,5 +1,3 @@
-Telegram: @adamsm_bot
-
 Open the home directory
 ```
 cd .\src\
@@ -14,4 +12,6 @@ docker run -p 80:80 ivupi/adamsmithwebapi:dev -e "ASPNETCORE_ENVIRONMENT=Develop
 ```
 Make a GET request to http://127.0.0.1/rate/usd
 
+
 Docker Hub: https://hub.docker.com/repository/docker/ivupi/adamsmithwebapi
+Telegram: @adamsm_bot
