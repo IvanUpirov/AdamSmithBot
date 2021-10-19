@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AdamSmith.Function\AdamSmith.csproj" />
+    <ProjectReference Include="..\AdamSmith.Function\AdamSmith.Lambda.csproj" />
   </ItemGroup>
 
 </Project>

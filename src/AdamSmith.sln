@@ -8,9 +8,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\.github\workflows\main.yml = ..\.github\workflows\main.yml
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdamSmith", "AdamSmith.Function\AdamSmith.csproj", "{5E8D3734-D827-4EB4-A5A4-7A6B1C386DEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdamSmith.Lambda", "AdamSmith.Function\AdamSmith.Lambda.csproj", "{5E8D3734-D827-4EB4-A5A4-7A6B1C386DEA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdamSmith.Tests", "AdamSmith.Tests\AdamSmith.Tests.csproj", "{3C333565-77AC-4AA8-8D5E-9F4A8736AC88}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdamSmith.Core", "AdamSmith.Core\AdamSmith.Core.csproj", "{52C77545-0BF7-4B8C-B008-B4DFC609181A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdamSmith.WebApi", "AdamSmith.WebApi\AdamSmith.WebApi.csproj", "{0F76B5BE-D819-43DF-AF0B-8C6080C8A5AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{28D429C0-086A-4DB8-A544-E0A262543EA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,9 +32,21 @@ Global
 		{3C333565-77AC-4AA8-8D5E-9F4A8736AC88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C333565-77AC-4AA8-8D5E-9F4A8736AC88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C333565-77AC-4AA8-8D5E-9F4A8736AC88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52C77545-0BF7-4B8C-B008-B4DFC609181A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52C77545-0BF7-4B8C-B008-B4DFC609181A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52C77545-0BF7-4B8C-B008-B4DFC609181A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52C77545-0BF7-4B8C-B008-B4DFC609181A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F76B5BE-D819-43DF-AF0B-8C6080C8A5AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F76B5BE-D819-43DF-AF0B-8C6080C8A5AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F76B5BE-D819-43DF-AF0B-8C6080C8A5AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F76B5BE-D819-43DF-AF0B-8C6080C8A5AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5E8D3734-D827-4EB4-A5A4-7A6B1C386DEA} = {28D429C0-086A-4DB8-A544-E0A262543EA3}
+		{0F76B5BE-D819-43DF-AF0B-8C6080C8A5AD} = {28D429C0-086A-4DB8-A544-E0A262543EA3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F499EF6D-0238-496D-B150-752C0103717D}
