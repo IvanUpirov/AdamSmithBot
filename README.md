@@ -14,4 +14,5 @@ Make a GET request to http://127.0.0.1/rate/usd
 
 
 Docker Hub: https://hub.docker.com/repository/docker/ivupi/adamsmithwebapi
+
 Telegram: @adamsm_bot
