@@ -14,6 +14,8 @@ namespace AdamSmith
     {
         public async Task<string> FunctionHandler(APIGatewayProxyRequest request)
         {
+            LogRequest(request);
+
             JObject update = JObject.Parse(request.Body);
 
             string query = update["message"]["text"].ToString().Replace("/", string.Empty);
@@ -27,6 +29,13 @@ namespace AdamSmith
             };
 
             return responseBody.ToString();
+        }
+
+        private static void LogRequest(APIGatewayProxyRequest request)
+        {
+            LambdaLogger.Log(request.Body);
+            LambdaLogger.Log(request.Path);
+            LambdaLogger.Log(request.HttpMethod);
         }
 
         private IDataProvider GetDataProvider(string query)
