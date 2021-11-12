@@ -14,28 +14,28 @@ namespace AdamSmith
     {
         public async Task<string> FunctionHandler(APIGatewayProxyRequest request)
         {
-            LogRequest(request);
-
-            JObject update = JObject.Parse(request.Body);
-
-            string query = update["message"]["text"].ToString().Replace("/", string.Empty);
-            string responseText = await GetDataProvider(query).GetDataAsync(query);
-
-            var responseBody = new JObject
+            try
             {
-                { "chat_id", update["message"]["chat"]["id"] },
-                { "method", "sendMessage" },
-                { "text", responseText }
-            };
+                JObject update = JObject.Parse(request.Body);
 
-            return responseBody.ToString();
-        }
+                string query = update["message"]["text"].ToString().Replace("/", string.Empty);
+                string responseText = await GetDataProvider(query).GetDataAsync(query);
 
-        private static void LogRequest(APIGatewayProxyRequest request)
-        {
-            LambdaLogger.Log(request.Body);
-            LambdaLogger.Log(request.Path);
-            LambdaLogger.Log(request.HttpMethod);
+                var responseBody = new JObject
+                {
+                    { "chat_id", update["message"]["chat"]["id"] },
+                    { "method", "sendMessage" },
+                    { "text", responseText }
+                };
+
+                return responseBody.ToString();
+            }
+            catch (Exception e)
+            {
+                LambdaLogger.Log(e.Message);
+                LambdaLogger.Log(request.Body);
+                return string.Empty;
+            }
         }
 
         private IDataProvider GetDataProvider(string query)
