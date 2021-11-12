@@ -5,7 +5,6 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Threading.Tasks;
 
-// Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
 namespace AdamSmith
@@ -17,7 +16,6 @@ namespace AdamSmith
             try
             {
                 JObject update = JObject.Parse(request.Body);
-
                 string query = update["message"]["text"].ToString().Replace("/", string.Empty);
                 string responseText = await GetDataProvider(query).GetDataAsync(query);
 
