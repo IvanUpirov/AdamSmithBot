@@ -6,13 +6,8 @@ using System.Threading.Tasks;
 
 namespace AdamSmith.DataProviders
 {
-    class CurrencyDataProvider : IDataProvider
+    class CurrencyDataProvider
     {
-        public string GetData(string input)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<string> GetDataAsync(string input)
         {
             var url = string.Format(

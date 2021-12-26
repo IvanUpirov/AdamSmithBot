@@ -1,11 +1,12 @@
 ﻿using AdamSmith.DataProviders;
 using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
+using Amazon.Lambda.Serialization.SystemTextJson;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Threading.Tasks;
 
-[assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
+[assembly: LambdaSerializer(typeof(DefaultLambdaJsonSerializer))]
 
 namespace AdamSmith
 {
@@ -17,7 +18,7 @@ namespace AdamSmith
             {
                 JObject update = JObject.Parse(request.Body);
                 string query = update["message"]["text"].ToString().Replace("/", string.Empty);
-                string responseText = await GetDataProvider(query).GetDataAsync(query);
+                string responseText = await new CurrencyDataProvider().GetDataAsync(query);
 
                 var responseBody = new JObject
                 {
@@ -34,11 +35,6 @@ namespace AdamSmith
                 LambdaLogger.Log(request.Body);
                 return string.Empty;
             }
-        }
-
-        private IDataProvider GetDataProvider(string query)
-        {
-            return new CurrencyDataProvider();
         }
     }
 }
