@@ -25,4 +25,12 @@ namespace AdamSmith.DataProviders
                 : $"У мене немає курсу для цієї валюти";
         }
     }
+
+    class StartDataProvider
+    {
+        public string GetStartMessage() 
+        {
+            return "Список доступних валют доступний в меню. Приклад використання - /usd.";
+        }
+    }
 }

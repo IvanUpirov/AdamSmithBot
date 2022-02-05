@@ -17,10 +17,33 @@ namespace AdamSmith.Tests
         }
 
         [TestMethod]
-        public async Task EndToEnd()
+        public async Task Start()
         {
             var sut = new Function();
 
+            APIGatewayProxyRequest request = BuildRequest("/start");
+
+            await sut.FunctionHandler(request);
+        }
+
+        [TestMethod]
+        public async Task Usd()
+        {
+            var sut = new Function();
+
+            APIGatewayProxyRequest request = BuildRequest("/usd");
+
+            await sut.FunctionHandler(request);
+        }
+
+        [TestCleanup]
+        public void Cleanup()
+        {
+            Environment.SetEnvironmentVariable("currency_url", null);
+        }
+
+        private static APIGatewayProxyRequest BuildRequest(string messageText)
+        {
             var chat = new JObject
             {
                 { "id", 1 }
@@ -29,7 +52,7 @@ namespace AdamSmith.Tests
             var message = new JObject
             {
                 { "chat", chat },
-                { "text", "/usd" }
+                { "text", messageText }
             };
 
             var update = new JObject
@@ -42,14 +65,7 @@ namespace AdamSmith.Tests
             {
                 Body = JsonConvert.SerializeObject(update)
             };
-
-            await sut.FunctionHandler(request);
-        }
-
-        [TestCleanup]
-        public void Cleanup()
-        {
-            Environment.SetEnvironmentVariable("currency_url", null);
+            return request;
         }
     }
 }

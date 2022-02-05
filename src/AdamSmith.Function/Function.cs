@@ -18,7 +18,13 @@ namespace AdamSmith
             {
                 JObject update = JObject.Parse(request.Body);
                 string query = update["message"]["text"].ToString().Replace("/", string.Empty);
-                string responseText = await new CurrencyDataProvider().GetDataAsync(query);
+
+                string responseText = query switch
+                {
+                    "start" => new StartDataProvider().GetStartMessage(),
+                    _ when query.Length == 3 => await new CurrencyDataProvider().GetDataAsync(query),
+                    _ => throw new Exception($"Unexpected query: {query}")
+                };
 
                 var responseBody = new JObject
                 {
